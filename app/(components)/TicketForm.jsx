@@ -5,6 +5,7 @@ import React, { useState } from "react";
 
 const TicketForm = () => {
   const router = useRouter();
+
   const handleChange = (e) => {
     const value = e.target.value;
     const name = e.target.name;
@@ -17,13 +18,13 @@ const TicketForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/Tickets", {
+    const res = await fetch("../api/Tickets", {
       method: "POST",
       body: JSON.stringify({ formData }),
-      "content-type": "application/json",
+      "context-Type": "application/json",
     });
     if (!res.ok) {
-      throw new Error("failed to create ticket!");
+      throw new Error("fail to create");
     }
     router.refresh();
     router.push("/");
@@ -33,9 +34,9 @@ const TicketForm = () => {
     title: "",
     description: "",
     priority: 1,
-    progess: 0,
+    progress: 0,
     status: "not started",
-    category: "Hardware Problem",
+    category: "hardware problem",
   };
 
   const [formData, setFormData] = useState(startingTicketData);
@@ -56,11 +57,11 @@ const TicketForm = () => {
           required={true}
           value={formData.title}
         />
+
         <label>Description</label>
         <textarea
           id="description"
           name="description"
-          type="text"
           onChange={handleChange}
           required={true}
           value={formData.description}
@@ -72,9 +73,9 @@ const TicketForm = () => {
           value={formData.category}
           onChange={handleChange}
         >
-          <option value="Hardware Problem">Hardware Problem</option>
-          <option value="Software Problem">Software Problem</option>
-          <option value="Project">Project</option>
+          <option value="hardware problem">Hardware Problem</option>
+          <option value="software problem">Software Problem</option>
+          <option value="unkonwn problem">Unkonwn Problem</option>
         </select>
         <label>Priority</label>
         <div>
@@ -87,6 +88,7 @@ const TicketForm = () => {
             checked={formData.priority == 1}
           />
           <label>1</label>
+
           <input
             id="priority-2"
             name="priority"
@@ -96,6 +98,7 @@ const TicketForm = () => {
             checked={formData.priority == 2}
           />
           <label>2</label>
+
           <input
             id="priority-3"
             name="priority"
@@ -105,42 +108,24 @@ const TicketForm = () => {
             checked={formData.priority == 3}
           />
           <label>3</label>
-          <input
-            id="priority-4"
-            name="priority"
-            type="radio"
-            onChange={handleChange}
-            value={4}
-            checked={formData.priority == 4}
-          />
-          <label>4</label>
-          <input
-            id="priority-5"
-            name="priority"
-            type="radio"
-            onChange={handleChange}
-            value={5}
-            checked={formData.priority == 5}
-          />
-          <label>5</label>
         </div>
         <label>Progress</label>
         <input
           type="range"
           id="progress"
           name="progress"
-          value={formData.progess}
+          value={formData.progress}
           min="0"
           max="100"
           onChange={handleChange}
         />
         <label>Status</label>
         <select name="status" value={formData.status} onChange={handleChange}>
-          <option value="not started">Not Started</option>
-          <option value="started">Started</option>
-          <option value="done">Done</option>
+          <option value="not started">not started</option>
+          <option value="started">started</option>
+          <option value="done">done</option>
         </select>
-        <input type="submit" className="btn " value="Create Ticket" />
+        <input type="submit" className="btn" value="Create Ticket" />
       </form>
     </div>
   );
